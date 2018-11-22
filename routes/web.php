@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/events', 'EventController@index');
+Route::get('/presentations', 'PresentationController@index');
+Route::get('/speakers', 'SpeakerController@index');
+Route::get('/comments', 'CommentController@index');
+Route::get('/ratings', 'RatingController@index');
