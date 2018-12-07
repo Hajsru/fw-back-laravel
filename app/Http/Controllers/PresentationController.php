@@ -79,4 +79,29 @@ class PresentationController extends Controller
 
         return response()->json($presentationResponse);
     }
+
+    public function speakers(string $id) {
+        \DB::listen(function($sql) {
+            \Log::debug($sql->sql);
+        });
+        $speakers = Presentation::find($id)->speakers;
+
+        $presentationResponse = [];
+
+        $presentationResponse['links']['self'] = url('/api/v1/presentations/'.$id.'/speakers');
+        $presentationResponse['links']['parent'] = url('/api/v1/presentations/'.$id);
+
+        $presentationResponse['data'] = [];
+
+        foreach ($speakers as $speaker) {
+            array_push($presentationResponse['data'], [
+                'speakerId' => $speaker->speaker_id,
+                'name' => $speaker->name,
+                'description' => $speaker->description,
+                'photo' => $speaker->photo
+            ]);
+        }
+
+        return response()->json($presentationResponse);
+    }
 }

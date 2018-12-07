@@ -25,8 +25,8 @@ class Presentation extends Model
 
     public function speakers()
     {
-        return $this->belongsToMany('App\Speaker', 'presentation_speakers',
-            'presentation_id', 'speaker_id'
+        return $this->hasManyThrough('App\Speaker', 'App\Pivots\PresentationSpeakers',
+            'presentation_id', 'speaker_id', 'presentation_id', 'speaker_id'
         );
     }
 }

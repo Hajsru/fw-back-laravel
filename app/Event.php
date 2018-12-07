@@ -37,4 +37,14 @@ class Event extends Model
         );
 
     }
+
+    public function presentations()
+    {
+        return $this->hasMany(
+            'App\Presentation',
+            'event_id',
+            'event_id'
+        )->select((['*', \DB::raw('array_to_json(presentations.images) as images_array')]));
+
+    }
 }

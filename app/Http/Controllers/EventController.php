@@ -83,11 +83,6 @@ class EventController extends Controller
     }
 
     public function speakers(string $id) {
-
-        \DB::listen(function($sql) {
-            \Log::debug($sql->sql);
-        });
-
         $speakers = Event::find($id)->speakers;
 
         $eventResponse = [];
@@ -103,6 +98,29 @@ class EventController extends Controller
                 'name' => $speaker->name,
                 'description' => $speaker->description,
                 'photo' => $speaker->photo
+            ]);
+        }
+
+        return response()->json($eventResponse);
+    }
+
+    public function presentations(string $id) {
+
+        $presentations = Event::find($id)->presentations;
+
+        $eventResponse = [];
+
+        $eventResponse['links']['self'] = url('/api/v1/events/'.$id.'/presentations');
+        $eventResponse['links']['parent'] = url('/api/v1/events/'.$id);
+
+        $eventResponse['data'] = [];
+
+        foreach ($presentations as $presentation) {
+            array_push($eventResponse['data'], [
+                'presentationId' => $presentation->event_id,
+                'name' => $presentation->name,
+                'description' => $presentation->description,
+                'images' => json_decode($presentation->images_array)
             ]);
         }
 

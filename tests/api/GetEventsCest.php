@@ -121,4 +121,29 @@ class GetEventsCest
             ]
         ]);
     }
+
+    public function getEventPresentations(ApiTester $I)
+    {
+        $I->sendGET('/events/1/presentations');
+        $I->seeResponseCodeIs(HttpCode::OK); // 200
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'links' => [
+                'parent' => 'http://localhost/api/v1/events/1',
+                'self' => 'http://localhost/api/v1/events/1/presentations'
+            ]
+        ]);
+
+        $I->seeResponseContainsJson([
+            'data' => [
+                "presentationId" => 1,
+                "name" => "Как написать документацию и не сойти с ума",
+                "images" => [
+                    "//static.hajs.ru/amazing_photo.jpg"
+                ],
+                "description"=> "Больше никакой темы не приходит на ум"
+            ]
+        ]);
+    }
 }

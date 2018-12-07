@@ -22,6 +22,7 @@ Route::group(['prefix' => '/api/v1'], function() {
         Route::get('/{id}/comments', 'EventController@comments');
         Route::get('/{id}/rating', 'EventController@rating');
         Route::get('/{id}/speakers', 'EventController@speakers');
+        Route::get('/{id}/presentations', 'EventController@presentations');
     });
 
     Route::group(['prefix' => '/presentations'], function() {
@@ -29,6 +30,7 @@ Route::group(['prefix' => '/api/v1'], function() {
         Route::get('/{id}', 'PresentationController@detail');
         Route::get('/{id}/comments', 'PresentationController@comments');
         Route::get('/{id}/rating', 'PresentationController@rating');
+        Route::get('/{id}/speakers', 'PresentationController@speakers');
     });
 
     Route::group(['prefix' => '/speakers'], function() {
