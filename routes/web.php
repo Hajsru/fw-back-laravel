@@ -23,7 +23,13 @@ Route::group(['prefix' => '/api/v1'], function() {
         Route::get('/{id}/rating', 'EventController@rating');
     });
 
-    Route::get('/presentations', 'PresentationController@index');
+    Route::group(['prefix' => '/presentations'], function() {
+        Route::get('/', 'PresentationController@index');
+        Route::get('/{id}', 'PresentationController@detail');
+        Route::get('/{id}/comments', 'PresentationController@comments');
+        Route::get('/{id}/rating', 'PresentationController@rating');
+    });
+
     Route::get('/speakers', 'SpeakerController@index');
     Route::get('/comments', 'CommentController@index');
     Route::get('/ratings', 'RatingController@index');
