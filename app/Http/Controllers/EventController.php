@@ -81,4 +81,31 @@ class EventController extends Controller
 
         return response()->json($eventResponse);
     }
+
+    public function speakers(string $id) {
+
+        \DB::listen(function($sql) {
+            \Log::debug($sql->sql);
+        });
+
+        $speakers = Event::find($id)->speakers;
+
+        $eventResponse = [];
+
+        $eventResponse['links']['self'] = url('/api/v1/events/'.$id.'/speakers');
+        $eventResponse['links']['parent'] = url('/api/v1/events/'.$id);
+
+        $eventResponse['data'] = [];
+
+        foreach ($speakers as $speaker) {
+            array_push($eventResponse['data'], [
+                'speakerId' => $speaker->speaker_id,
+                'name' => $speaker->name,
+                'description' => $speaker->description,
+                'photo' => $speaker->photo
+            ]);
+        }
+
+        return response()->json($eventResponse);
+    }
 }

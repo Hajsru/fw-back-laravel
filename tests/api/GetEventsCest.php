@@ -98,4 +98,27 @@ class GetEventsCest
             ]
         ]);
     }
+
+    public function getEventSpeakers(ApiTester $I)
+    {
+        $I->sendGET('/events/1/speakers');
+        $I->seeResponseCodeIs(HttpCode::OK); // 200
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            'links' => [
+                'parent' => 'http://localhost/api/v1/events/1',
+                'self' => 'http://localhost/api/v1/events/1/speakers'
+            ]
+        ]);
+
+        $I->seeResponseContainsJson([
+            'data' => [
+                "speakerId" => 1,
+                "name" => "Чел Мордашкин",
+                "photo" =>  "//static.hajs.ru/amazing_photo.jpg",
+                "description"=> "Хороший человек с приятной внешностью"
+            ]
+        ]);
+    }
 }

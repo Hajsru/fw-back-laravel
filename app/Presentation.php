@@ -22,4 +22,11 @@ class Presentation extends Model
             'presentation_id', 'rating_id'
         );
     }
+
+    public function speakers()
+    {
+        return $this->belongsToMany('App\Speaker', 'presentation_speakers',
+            'presentation_id', 'speaker_id'
+        );
+    }
 }

@@ -22,4 +22,9 @@ class Speaker extends Model
             'speaker_id', 'rating_id'
         );
     }
+
+    public function events()
+    {
+        return $this->belongsToMany('App\Event')->using('App\Pivots\PresentationSpeakers');
+    }
 }

@@ -21,6 +21,7 @@ Route::group(['prefix' => '/api/v1'], function() {
         Route::get('/{id}', 'EventController@detail');
         Route::get('/{id}/comments', 'EventController@comments');
         Route::get('/{id}/rating', 'EventController@rating');
+        Route::get('/{id}/speakers', 'EventController@speakers');
     });
 
     Route::group(['prefix' => '/presentations'], function() {
