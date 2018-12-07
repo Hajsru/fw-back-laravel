@@ -30,7 +30,13 @@ Route::group(['prefix' => '/api/v1'], function() {
         Route::get('/{id}/rating', 'PresentationController@rating');
     });
 
-    Route::get('/speakers', 'SpeakerController@index');
+    Route::group(['prefix' => '/speakers'], function() {
+        Route::get('/', 'SpeakerController@index');
+        Route::get('/{id}', 'SpeakerController@detail');
+        Route::get('/{id}/comments', 'SpeakerController@comments');
+        Route::get('/{id}/rating', 'SpeakerController@rating');
+    });
+
     Route::get('/comments', 'CommentController@index');
     Route::get('/ratings', 'RatingController@index');
 });
