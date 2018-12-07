@@ -15,8 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/events', 'EventController@index');
-Route::get('/presentations', 'PresentationController@index');
-Route::get('/speakers', 'SpeakerController@index');
-Route::get('/comments', 'CommentController@index');
-Route::get('/ratings', 'RatingController@index');
+Route::group(['prefix' => '/api/v1'], function() {
+    Route::group(['prefix' => '/events'], function() {
+        Route::get('/', 'EventController@index');
+        Route::get('/{id}', 'EventController@detail');
+        Route::get('/{id}/comments', 'EventController@comments');
+        Route::get('/{id}/rating', 'EventController@rating');
+    });
+
+    Route::get('/presentations', 'PresentationController@index');
+    Route::get('/speakers', 'SpeakerController@index');
+    Route::get('/comments', 'CommentController@index');
+    Route::get('/ratings', 'RatingController@index');
+});
